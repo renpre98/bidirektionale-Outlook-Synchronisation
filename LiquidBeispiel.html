@@ -1,0 +1,17 @@
+Termindaten:<br>
+Datum: {{appointment.datetime}}<br>
+Vorname: {{appointment.details.first_name.as_string}}<br>
+Nachname: {{appointment.details.last_name.as_string}}<br>
+E-Mail: {{appointment.details.mail.as_string}}<br>
+Telefonnummer: {{appointment.details.phone.as_string}}<br>
+Kommentar: {{appointment.details.comment.as_string}}<br>
+Gebuchte Dienstleistungen:
+{% for service in appointment.services.requested_services.items %}
+	{% for configservice in appointment.resource.provided_services %}
+		{% if configservice.display_name == service[1].display_name.as_string %}
+			<li id="service_{{ service[0] }}">
+				{{ service[1].amount.as_string }} x {{ service[1].display_name.as_string }}
+			</li>
+		{% endif %}
+	{% endfor %}
+{% endfor %}
